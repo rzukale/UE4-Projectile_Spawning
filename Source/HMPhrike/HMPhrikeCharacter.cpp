@@ -81,6 +81,7 @@ void AHMPhrikeCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	// Custom PlayerInputs
 	PlayerInputComponent->BindAction("ResetHealth", IE_Pressed, this, &AHMPhrikeCharacter::ResetHealth);
 	PlayerInputComponent->BindAction("SpawnOrbs", IE_Pressed, this, &AHMPhrikeCharacter::SpawnOrbs);
+	PlayerInputComponent->BindAction("ExitGame", IE_Pressed, this, &AHMPhrikeCharacter::ExitGame);
 }
 
 void AHMPhrikeCharacter::ResetHealth()
@@ -94,6 +95,11 @@ void AHMPhrikeCharacter::SpawnOrbs()
 	{
 		AIControllerPTR->SpawnOrbs();
 	}
+}
+
+void AHMPhrikeCharacter::ExitGame()
+{
+	FGenericPlatformMisc::RequestExit(false);
 }
 
 void AHMPhrikeCharacter::BeginPlay()

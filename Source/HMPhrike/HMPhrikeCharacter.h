@@ -86,5 +86,6 @@ private:
 
 	void ResetHealth();
 	void SpawnOrbs();
+	void ExitGame();
 };
 
