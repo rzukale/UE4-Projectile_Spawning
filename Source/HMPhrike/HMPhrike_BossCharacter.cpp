@@ -2,6 +2,7 @@
 
 
 #include "HMPhrike_BossCharacter.h"
+#include "HMPhrike_OrbSpawner.h"
 
 // Sets default values
 AHMPhrike_BossCharacter::AHMPhrike_BossCharacter()
@@ -15,7 +16,17 @@ AHMPhrike_BossCharacter::AHMPhrike_BossCharacter()
 void AHMPhrike_BossCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Spawner = GetWorld()->SpawnActor<AHMPhrike_OrbSpawner>(SpawnerClass);
+	if (!ensure(Spawner != nullptr)) return;
+	if (Spawner != nullptr)
+	{
+		Spawner->AttachToComponent(
+			GetMesh(),
+			FAttachmentTransformRules::KeepRelativeTransform,
+			TEXT("OrbSpawnerHead"));
+		Spawner->SetOwner(this);
+	}
 }
 
 // Called every frame
@@ -23,4 +34,12 @@ void AHMPhrike_BossCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AHMPhrike_BossCharacter::LaunchOrbs()
+{
+	if (Spawner != nullptr)
+	{
+		Spawner->SpawnOrbs();
+	}
 }

@@ -16,9 +16,12 @@ AHMPhrike_Orb::AHMPhrike_Orb()
 	PrimaryActorTick.bCanEverTick = false;
 
 	OrbMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Orb Mesh"));
+	if (!ensure(OrbMesh != nullptr)) return;
 	RootComponent = OrbMesh;
 	OrbMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Orb Movement Component"));
+	if (!ensure(OrbMovementComponent != nullptr)) return;
 	FireTraceParticles = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Orb Fire trail"));
+	if (!ensure(FireTraceParticles != nullptr)) return;
 	FireTraceParticles->SetupAttachment(RootComponent);
 }
 

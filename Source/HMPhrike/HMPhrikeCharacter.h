@@ -81,6 +81,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Custom")
 	float MaxHealth = 100.f;
 
+	UPROPERTY()
 	class AHMPhrike_AIController* AIControllerPTR;
 
 	void ResetHealth();
