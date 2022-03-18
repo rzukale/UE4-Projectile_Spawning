@@ -29,14 +29,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SpawnOrbs();
+	void CallOrbSpawn();
 
 private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Custom")
 	TSubclassOf<class AHMPhrike_Orb> OrbClass;
 
-	FVector OrbSpawnLocation = FVector::ZeroVector;
-	UPROPERTY(EditAnywhere, Category = "Combat")
+;	UPROPERTY(EditAnywhere, Category = "Combat")
 	float OrbRotationIncrement = 10.f;
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	int32 OrbSpawnCycles = 4;
@@ -54,5 +54,11 @@ private:
 	float PitchIncreaseBetweenOrbCycles = 10.f; \
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float TimeDelayBetweenSpawnAndLaunch = 0.5f;
+
+	uint32 TotalOrbsToSpawn = 0;
+	float Speed;
+	FRotator OrbRotation;
+
+	void SpawnOrb();
 
 };

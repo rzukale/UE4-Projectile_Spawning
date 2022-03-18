@@ -40,6 +40,7 @@ void AHMPhrike_BossCharacter::LaunchOrbs()
 {
 	if (Spawner != nullptr)
 	{
-		Spawner->SpawnOrbs();
+		Spawner->CallOrbSpawn();
+		//Spawner->SpawnOrbs();
 	}
 }

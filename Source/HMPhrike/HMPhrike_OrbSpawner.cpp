@@ -10,7 +10,7 @@
 AHMPhrike_OrbSpawner::AHMPhrike_OrbSpawner()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	if (Root != nullptr)
@@ -34,12 +34,19 @@ void AHMPhrike_OrbSpawner::BeginPlay()
 void AHMPhrike_OrbSpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (TotalOrbsToSpawn > 0)
+	{
+		SpawnOrb();
+	}
 }
 
+
+// DEPRECATED
 void AHMPhrike_OrbSpawner::SpawnOrbs()
 {
-	float Speed = OrbInitialSpeed;
-	FRotator OrbRotation = FRotator::ZeroRotator;
+	Speed = OrbInitialSpeed;
+	OrbRotation = FRotator::ZeroRotator;
 	OrbRotation.Pitch = InitialPitchAngle;
 	for (int32 i = 0; i < OrbSpawnCycles; i++)
 	{
@@ -51,6 +58,35 @@ void AHMPhrike_OrbSpawner::SpawnOrbs()
 			Orb->InitOrb(Speed, TimeDelayBetweenSpawnAndLaunch);
 			UGameplayStatics::FinishSpawningActor(Orb, Transform);
 		}
+		OrbRotation.Pitch += PitchIncreaseBetweenOrbCycles;
+		Speed += OrbSpeedIncrease;
+	}
+}
+
+void AHMPhrike_OrbSpawner::CallOrbSpawn()
+{
+	TotalOrbsToSpawn = OrbsPerCycle * OrbSpawnCycles;
+	OrbRotation = FRotator::ZeroRotator;
+	OrbRotation.Pitch = InitialPitchAngle;
+	Speed = OrbInitialSpeed;
+}
+
+void AHMPhrike_OrbSpawner::SpawnOrb()
+{
+	OrbRotation.Yaw += YawIncreaseBetweenOrbs;
+	FTransform Transform(OrbRotation, GetActorLocation());
+	if (OrbClass != nullptr)
+	{
+		AHMPhrike_Orb* Orb = GetWorld()->SpawnActorDeferred<AHMPhrike_Orb>(OrbClass, Transform);
+		if (Orb != nullptr)
+		{
+			Orb->InitOrb(Speed, TimeDelayBetweenSpawnAndLaunch);
+		}
+		UGameplayStatics::FinishSpawningActor(Orb, Transform);
+	}
+	TotalOrbsToSpawn--;
+	if (TotalOrbsToSpawn % OrbsPerCycle == 0)
+	{
 		OrbRotation.Pitch += PitchIncreaseBetweenOrbCycles;
 		Speed += OrbSpeedIncrease;
 	}
