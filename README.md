@@ -4,3 +4,5 @@
 Pressing '1' will spawn orbs
 
 Pressing '2' will reset Player health
+
+Pressing 'Escape' will exit the game
