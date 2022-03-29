@@ -2,7 +2,8 @@
 
 
 #include "HMPhrike_BossCharacter.h"
-#include "HMPhrike_OrbSpawner.h"
+#include "HMPhrike_OrbSpawnerHand.h"
+#include "HMPhrike_OrbSpawnerHead.h"
 
 // Sets default values
 AHMPhrike_BossCharacter::AHMPhrike_BossCharacter()
@@ -17,15 +18,25 @@ void AHMPhrike_BossCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Spawner = GetWorld()->SpawnActor<AHMPhrike_OrbSpawner>(SpawnerClass);
-	if (!ensure(Spawner != nullptr)) return;
-	if (Spawner != nullptr)
+	SpawnerHead = GetWorld()->SpawnActor<AHMPhrike_OrbSpawnerHead>(SpawnerHeadClass);
+	if (!ensure(SpawnerHead != nullptr)) return;
+	if (SpawnerHead != nullptr)
 	{
-		Spawner->AttachToComponent(
+		SpawnerHead->AttachToComponent(
 			GetMesh(),
 			FAttachmentTransformRules::KeepRelativeTransform,
 			TEXT("OrbSpawnerHead"));
-		Spawner->SetOwner(this);
+		SpawnerHead->SetOwner(this);
+	}
+	SpawnerLeftHand = GetWorld()->SpawnActor<AHMPhrike_OrbSpawnerHand>(SpawnerHandClass);
+	if (!ensure(SpawnerLeftHand != nullptr)) return;
+	if (SpawnerLeftHand != nullptr)
+	{
+		SpawnerLeftHand->AttachToComponent(
+			GetMesh(),
+			FAttachmentTransformRules::KeepRelativeTransform,
+			TEXT("OrbSpawnerLeftHand"));
+		SpawnerLeftHand->SetOwner(this);
 	}
 }
 
@@ -38,9 +49,16 @@ void AHMPhrike_BossCharacter::Tick(float DeltaTime)
 
 void AHMPhrike_BossCharacter::LaunchOrbs()
 {
-	if (Spawner != nullptr)
+	if (SpawnerHead != nullptr)
 	{
-		Spawner->CallOrbSpawn();
-		//Spawner->SpawnOrbs();
+		SpawnerHead->InitOrbSpawning();
+	}
+}
+
+void AHMPhrike_BossCharacter::LaunchOrbsHands()
+{
+	if (SpawnerLeftHand != nullptr)
+	{
+		SpawnerLeftHand->InitOrbSpawning();
 	}
 }

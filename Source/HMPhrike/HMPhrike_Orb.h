@@ -20,32 +20,29 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
-	void InitOrb(float Speed, float TimeToLaunch);
+	void InitOrb(const float& Speed);
+	void SetInvisible();
+	void LaunchOrb();
+
+private:
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Custom")
-		UStaticMeshComponent* OrbMesh;
-	UPROPERTY(EditAnywhere, Category = "Custom")
-		UParticleSystem* OnHitExplosion = nullptr;
-	UPROPERTY(EditAnywhere, Category = "Custom")
-		class UParticleSystemComponent* FireTraceParticles = nullptr;
+	UStaticMeshComponent* OrbMesh;
+	UPROPERTY(EditDefaultsOnly, Category = "Custom")
+	UParticleSystem* OnHitExplosion = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Custom")
+	class UParticleSystemComponent* FireTraceParticles = nullptr;
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
-		class UProjectileMovementComponent* OrbMovementComponent;
-
+	class UProjectileMovementComponent* OrbMovementComponent;
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-		float MovementSpeed = 1300.f;
+	float MovementSpeed = 1300.f;
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-		float DamageToApply = 15.f;
+	float DamageToApply = 15.f;
 
-	float LaunchTime;
-	float InitialSpeed;
-
-	UFUNCTION()
-	void LaunchOrb();
-
-	UFUNCTION()
-		void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	bool bIsVisible = true;
 };

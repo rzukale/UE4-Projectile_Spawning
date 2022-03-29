@@ -80,8 +80,9 @@ void AHMPhrikeCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 
 	// Custom PlayerInputs
 	PlayerInputComponent->BindAction("ResetHealth", IE_Pressed, this, &AHMPhrikeCharacter::ResetHealth);
-	PlayerInputComponent->BindAction("SpawnOrbs", IE_Pressed, this, &AHMPhrikeCharacter::SpawnOrbs);
+	PlayerInputComponent->BindAction("SpawnOrbs", IE_Pressed, this, &AHMPhrikeCharacter::SpawnOrbs); 
 	PlayerInputComponent->BindAction("ExitGame", IE_Pressed, this, &AHMPhrikeCharacter::ExitGame);
+	PlayerInputComponent->BindAction("SpawnOrbsHands", IE_Pressed, this, &AHMPhrikeCharacter::SpawnOrbsHands);
 }
 
 void AHMPhrikeCharacter::ResetHealth()
@@ -94,6 +95,14 @@ void AHMPhrikeCharacter::SpawnOrbs()
 	if (AIControllerPTR != nullptr)
 	{
 		AIControllerPTR->SpawnOrbs();
+	}
+}
+
+void AHMPhrikeCharacter::SpawnOrbsHands()
+{
+	if (AIControllerPTR != nullptr)
+	{
+		AIControllerPTR->SpawnOrbsHands();
 	}
 }
 

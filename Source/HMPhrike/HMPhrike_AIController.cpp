@@ -15,17 +15,25 @@ void AHMPhrike_AIController::SpawnOrbs()
 	}
 }
 
+void AHMPhrike_AIController::SpawnOrbsHands()
+{
+	AHMPhrike_BossCharacter* BossCharacter = Cast<AHMPhrike_BossCharacter>(GetPawn());
+	if (BossCharacter != nullptr)
+	{
+		BossCharacter->LaunchOrbsHands();
+	}
+}
+
 void AHMPhrike_AIController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	PlayerCharacter = Cast<AHMPhrikeCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
 }
 
 void AHMPhrike_AIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	AHMPhrikeCharacter* PlayerCharacter = Cast<AHMPhrikeCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
 	if (PlayerCharacter != nullptr)
 	{
 		APawn* AIPawn = GetPawn();

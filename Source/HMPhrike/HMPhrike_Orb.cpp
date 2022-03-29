@@ -7,7 +7,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "HMPhrikeCharacter.h"
 #include "Particles/ParticleSystemComponent.h"
-#include "TimerManager.h"
 
 // Sets default values
 AHMPhrike_Orb::AHMPhrike_Orb()
@@ -36,25 +35,36 @@ void AHMPhrike_Orb::BeginPlay()
 	}
 }
 
-// Called every frame
-void AHMPhrike_Orb::Tick(float DeltaTime)
+void AHMPhrike_Orb::InitOrb(const float& Speed)
 {
-	Super::Tick(DeltaTime);
+	if (OrbMovementComponent != nullptr)
+	{
+		OrbMovementComponent->MaxSpeed = Speed;
+		OrbMovementComponent->InitialSpeed = Speed;
+		OrbMovementComponent->Velocity = FVector::ZeroVector;
+	}
 }
 
-void AHMPhrike_Orb::InitOrb(float Speed , float TimeToLaunch)
+void AHMPhrike_Orb::SetInvisible()
 {
-	InitialSpeed = Speed;
-	FTimerHandle Timer;
-	GetWorldTimerManager().SetTimer(Timer, this, &AHMPhrike_Orb::LaunchOrb, TimeToLaunch, false);
+	if (OrbMesh != nullptr && FireTraceParticles != nullptr)
+	{
+		OrbMesh->SetVisibility(false);
+		FireTraceParticles->SetVisibility(false);
+		bIsVisible = false;
+	}
 }
 
 void AHMPhrike_Orb::LaunchOrb()
 {
 	if (OrbMovementComponent != nullptr)
 	{
-		OrbMovementComponent->MaxSpeed = InitialSpeed;
-		OrbMovementComponent->InitialSpeed = InitialSpeed;
+		if (bIsVisible == false && OrbMesh != nullptr && FireTraceParticles != nullptr)
+		{
+			OrbMesh->SetVisibility(true);
+			FireTraceParticles->SetVisibility(true);
+			bIsVisible = true;
+		}
 		OrbMovementComponent->Velocity = GetActorRotation().Vector() * OrbMovementComponent->InitialSpeed;
 	}
 }

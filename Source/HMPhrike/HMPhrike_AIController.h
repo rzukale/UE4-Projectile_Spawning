@@ -18,10 +18,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SpawnOrbs();
+	void SpawnOrbsHands();
 
 protected:
 	virtual void BeginPlay() override;
 
-private:
-	class AHMPhrikeCharacter* PlayerCharacter;
 };

@@ -6,7 +6,8 @@
 #include "GameFramework/Character.h"
 #include "HMPhrike_BossCharacter.generated.h"
 
-class AHMPhrike_OrbSpawner;
+class AHMPhrike_OrbSpawnerHead;
+class AHMPhrike_OrbSpawnerHand;
 
 UCLASS()
 class HMPHRIKE_API AHMPhrike_BossCharacter : public ACharacter
@@ -26,11 +27,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void LaunchOrbs();
+	void LaunchOrbsHands();
 
 private:
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AHMPhrike_OrbSpawner> SpawnerClass;
+	TSubclassOf<AHMPhrike_OrbSpawnerHead> SpawnerHeadClass;
 	UPROPERTY()
-	AHMPhrike_OrbSpawner* Spawner = nullptr;
+	AHMPhrike_OrbSpawnerHead* SpawnerHead = nullptr;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AHMPhrike_OrbSpawnerHand> SpawnerHandClass;
+	UPROPERTY()
+	AHMPhrike_OrbSpawnerHand* SpawnerLeftHand = nullptr;
 };

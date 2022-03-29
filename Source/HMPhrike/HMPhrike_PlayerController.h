@@ -20,7 +20,7 @@ protected:
 
 private:
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UUserWidget> HUDClass;
 	UPROPERTY()
 	UUserWidget* HUD = nullptr;
