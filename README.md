@@ -1,8 +1,3 @@
-# HMPhrikeArtifact
- Recreated Phrike's Orb attack ability from the game Returnal as a job application demonstration to HouseMarque
+# HMPhrikeArtifact DEPRECATED
 
-Pressing '1' will spawn orbs
-
-Pressing '2' will reset Player health
-
-Pressing 'Escape' will exit the game
+Check out version 2 here: https://github.com/rzukale/HMPhrikeArtifactV2
