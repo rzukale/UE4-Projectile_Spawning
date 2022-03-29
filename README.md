@@ -8,3 +8,7 @@
   - OrbSpawnerBase has shared variables and virtual functions.
   - OrbSpawnerBase has 2 subclasses, OrbSpawnerHand & OrbSpawnerHead that contain their specific variables and overrided functions.
  
+ ## Usage
+ - Press '1' to trigger OrbSpawnerHead
+ - Press '2' to reset player health
+ - Press '3' to trigger OrbSpawnerHand
